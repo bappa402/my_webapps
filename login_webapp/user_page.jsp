@@ -15,7 +15,7 @@
             String[] city = {"kolkata", "bangalore", "delhi"};
             int[] offered = {1,1,0};
             String user_city="null";
-            int offer_status=0;
+            int offer_status=-1;
 
             for (int i=0; i< name.length; i++){
                 
@@ -30,6 +30,10 @@
             session.setAttribute("city", user_city);
             session.setAttribute("ofsts", offer_status);
         }
+        //nothing occured in loop, username not found
+        if ((Integer) session.getAttribute("ofsts") == -1) 
+            out.print("please enter valid username.");
+        else{
         %>
 
         <h2>hi <%= session.getAttribute("name").toString()%></h2>
@@ -42,6 +46,7 @@
             <a href="offer.jsp"><button style="color:white; background-color: green;"> Check offer letter </button></a>
         <%
         }
+    }
         %>
     <br><br>
         <a href="login.jsp"><button style="color:white; background-color: blue;"> back </button></a>
