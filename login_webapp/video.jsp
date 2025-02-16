@@ -9,7 +9,7 @@
 
     <p>Hi, enjoy watching the video.</p>
 
-    <video width="600" height="340" controls>
+    <video width="600" height="340" controls preload="auto">
         <source src="videos/tramline_song.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
