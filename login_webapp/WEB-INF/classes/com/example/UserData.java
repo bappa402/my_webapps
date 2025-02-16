@@ -12,11 +12,28 @@ public class UserData {
         return "current path of java class is: "+ System.getProperty("user.dir");
     }
 
-    public static String getDetails(String name, String filepath) {
-        
 
+    public static String[] getUserList(String filepath){
         File file = new File(filepath);
+        String users[] = new String[100];
+        int i=0;
 
+        try (Scanner sc = new Scanner(file)) { // Try-with-resources (closes Scanner automatically)
+            while (sc.hasNextLine() && i < users.length) {
+                String line = sc.nextLine();
+                users[i] = line.split(",")[0];
+                i++;
+                
+            }
+            return users;
+        } catch (FileNotFoundException e) {
+            System.out.println("file not found");
+            return null;
+        }
+    }
+
+    public static String getDetails(String name, String filepath) {
+        File file = new File(filepath);
         try (Scanner sc = new Scanner(file)) { // Try-with-resources (closes Scanner automatically)
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
@@ -34,9 +51,11 @@ public class UserData {
 
     void main() {
         // insertData("bappa", "kolkata");
-        String filepath = "com\\example\\user_details.txt";
-        System.out.println(getDetails("bappa", filepath));
-        System.out.println(getCurrentPath());
+        String filepath = "example\\user_details.txt";
+        for (String s: getUserList(filepath)){
+            System.out.println(s);
+        }
+        //System.out.println(getCurrentPath());
         
     }
 }
