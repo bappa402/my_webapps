@@ -1,4 +1,4 @@
-<%@ page language="java" import="com.example.BMICalculator" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" import="com.example.UserData" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <!DOCTYPE html>
 <html>
@@ -6,6 +6,8 @@
         <title>login page</title>
     </head>
     <body>
+       
+
         <%
         if (session.getAttribute("name") == null) {
         
@@ -30,6 +32,11 @@
             session.setAttribute("city", user_city);
             session.setAttribute("ofsts", offer_status);
         }
+
+            String filepath = application.getRealPath("WEB-INF/classes/com/example/user_details.txt") ;
+            String result = UserData.getDetails("bappa", filepath);
+            out.print("hi, your gift is a "+ result.split(",")[1] + ".   ");
+
         //nothing occured in loop, username not found
         if ((Integer) session.getAttribute("ofsts") == -1) 
             out.print("please enter valid username.");
