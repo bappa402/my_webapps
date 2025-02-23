@@ -92,6 +92,24 @@
         </form>
     <% } %>
 
+<!-- see your friends -->
+<h3>Your Friends</h3>
+<%
+    stmt = conn.prepareStatement("SELECT username FROM users WHERE id IN ("
+        + " SELECT receiver_id FROM friend_requests WHERE status='accepted' AND sender_id=?"
+        + " UNION "
+        + " SELECT sender_id FROM friend_requests WHERE status='accepted' AND receiver_id=?)");
+
+    stmt.setInt(1, userId);
+    stmt.setInt(2, userId);
+    rs = stmt.executeQuery();
+
+    while (rs.next()) {
+        out.print("<p style='color:green'>" + rs.getString("username") + "</p>");
+    }
+%>
+
+
     <!-- Send Friend Request -->
     <h3>Send Friend Request</h3>
     <form action="friend_request.jsp" method="post">
