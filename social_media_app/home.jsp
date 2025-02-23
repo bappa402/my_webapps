@@ -53,7 +53,7 @@
 </head>
 <body>
 
-    <h2>Welcome, <%= username %>!</h2>
+    <h2>Welcome, <%= username %>! <span id='friendCount' style="color: blue;">friends count....</span></h2>
 
     <% if ("admin".equals(username)) { %>
         <h3>Add New User</h3>
@@ -94,7 +94,10 @@
 
 <!-- see your friends -->
 <h3>Your Friends</h3>
+
+
 <%
+int count=0;
     stmt = conn.prepareStatement("SELECT username FROM users WHERE id IN ("
         + " SELECT receiver_id FROM friend_requests WHERE status='accepted' AND sender_id=?"
         + " UNION "
@@ -103,12 +106,17 @@
     stmt.setInt(1, userId);
     stmt.setInt(2, userId);
     rs = stmt.executeQuery();
+    
 
     while (rs.next()) {
+        count++;
         out.print("<p style='color:green'>" + rs.getString("username") + "</p>");
     }
 %>
 
+<script>
+    document.getElementById("friendCount").innerHTML = " (Friends:  <%= count %>)";
+</script>
 
     <!-- Send Friend Request -->
     <h3>Send Friend Request</h3>
