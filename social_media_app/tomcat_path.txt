@@ -1,0 +1,9 @@
+C:\Users\91700\.rsp\redhat-community-server-connector\runtimes\installations\tomcat-10.0.0\apache-tomcat-10.0.0\webapps\social_media_app\WEB-INF
+
+sqlite3
+
+.open socialmedia.db
+
+.tables
+
+select * from user_posts;
