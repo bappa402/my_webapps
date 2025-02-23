@@ -16,7 +16,7 @@
         conn = DriverManager.getConnection(dbUrl);
 
         // Insert the post into the database
-        stmt = conn.prepareStatement("INSERT INTO user_posts (user_id, post, time_stamp) VALUES (?, ?, CURRENT_TIMESTAMP)");
+        stmt = conn.prepareStatement("INSERT INTO user_posts (user_id, post, time_stamp) VALUES (?, ?, datetime('now', 'localtime'))");
         stmt.setInt(1, userId);
         stmt.setString(2, postText);
         stmt.executeUpdate();
