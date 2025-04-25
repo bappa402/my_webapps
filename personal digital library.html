@@ -1,0 +1,160 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 10px;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            color: yellow;
+            background-color: black;
+            padding: 10px;
+            border-radius: 5px;
+            max-width: 90%;
+            margin: auto;
+        }
+
+        button {
+            display: inline-block;
+            width: 90%;
+            max-width: 300px;
+            margin: 10px auto;
+            padding: 12px;
+            font-size: 16px;
+            color: white;
+            background-color: green;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: darkgreen;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            width: 80%;
+            max-width: 300px;
+            margin: 20px auto;
+            font-size: 16px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #hyperlinks {
+            margin-top: 20px;
+            text-align: left;
+            max-width: 90%;
+            margin: 20px auto;
+        }
+
+        a {
+            display: block;
+            margin: 8px 0;
+            text-decoration: none;
+            font-size: 18px;
+            color: blue;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Personal Digital Library</h1>
+
+    <button onclick="science()">Science Videos</button>
+    <button onclick="memes()">See Memes / Funny Reels</button>
+    <button onclick="showAll()">Show All Categories</button>
+
+    <br><br>
+
+    <input type="text" id="searchBar" onkeyup="searchFunction()" placeholder="Search for videos..." />
+
+    <br><br>
+    
+    <div id="hyperlinks"></div>
+
+    <script>
+        const categories = {
+            science: [
+                {
+                    title: "How simple ideas lead to scientific discoveries",
+                    url: "https://www.youtube.com/watch?v=F8UFGu2M2gM"
+                },
+                {
+                    title: "Day in a Life of a WW2 Comfort Woman",
+                    url: "https://www.youtube.com/watch?v=WglIW1u-YFY"
+                }
+            ],
+            memes: [
+                {
+                    title: "Funny Cats Compilation",
+                    url: "https://www.youtube.com/watch?v=3JZ_D3ELwOQ"
+                },
+                {
+                    title: "Best Memes Compilation",
+                    url: "https://www.youtube.com/watch?v=ZZ5LpwO-An4"
+                }
+            ]
+        };
+
+        function generateLinks(category) {
+            let linksHTML = '';
+            categories[category].forEach(video => {
+                linksHTML += `<a href="${video.url}" target="_blank">${video.title}</a>`;
+            });
+            document.getElementById("hyperlinks").innerHTML = linksHTML;
+        }
+
+        function science() {
+            generateLinks('science');
+        }
+
+        function memes() {
+            generateLinks('memes');
+        }
+
+        function showAll() {
+            let allLinksHTML = '';
+            Object.keys(categories).forEach(category => {
+                categories[category].forEach(video => {
+                    allLinksHTML += `<a href="${video.url}" target="_blank">${video.title}</a>`;
+                });
+            });
+            document.getElementById("hyperlinks").innerHTML = allLinksHTML;
+        }
+
+        function searchFunction() {
+            let input = document.getElementById('searchBar').value.toLowerCase();
+            let links = document.getElementById('hyperlinks').getElementsByTagName('a');
+            
+            for (let i = 0; i < links.length; i++) {
+                let linkText = links[i].textContent || links[i].innerText;
+                if (linkText.toLowerCase().includes(input)) {
+                    links[i].style.display = 'block';
+                } else {
+                    links[i].style.display = 'none';
+                }
+            }
+        }
+
+        // Show all categories by default when the page loads
+        window.onload = function() {
+            showAll();
+        }
+    </script>
+
+</body>
+
+</html>
